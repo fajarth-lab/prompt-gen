@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepRPP SMP — Studio Perancang RPP Pembelajaran Mendalam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-badge">✦ STUDIO RPP SMP</span>
+        <span class="brand-title">DeepRPP</span>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" id="btn-copy-top" class="btn-pill-primary">
+          <span>SALIN PROMPT</span>
+          <span class="arrow">↗</span>
+        </button>
+        <button type="button" id="btn-sample" class="btn-pill-outline">Contoh Isi</button>
+        <button type="button" id="btn-reset" class="btn-pill-outline">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">GENERATOR RENCANA PELAKSANAAN PEMBELAJARAN • JENJANG SMP</div>
+      <h1>Rancang RPP Bermakna,<br /><span>Berkesadaran &amp; Menggembirakan</span></h1>
+      <p class="hero-desc">
+        Konfigurasikan materi, kerangka pedagogis, komponen asesmen, hingga format dokumen siap unduh secara bertahap. Salin prompt ke AI pilihan Anda untuk langsung menghasilkan dokumen RPP lengkap.
+      </p>
+    </div>
+  </section>
+
+  <main class="container main-grid">
+    <!-- KOLOM KIRI: WIZARD 5 LANGKAH -->
+    <div class="wizard-column">
+      <div class="wizard-shell">
+        <!-- Progress Bar -->
+        <div class="wizard-progress-track">
+          <div class="wizard-progress-fill" id="wizard-progress-fill"></div>
+        </div>
+
+        <!-- Step Tabs -->
+        <div class="wizard-tabs" role="tablist">
+          <button type="button" class="step-tab active" data-step="1">
+            <span class="step-num">1</span>
+            <span class="step-label">MATERI</span>
+          </button>
+          <button type="button" class="step-tab" data-step="2">
+            <span class="step-num">2</span>
+            <span class="step-label">PEDAGOGI</span>
+          </button>
+          <button type="button" class="step-tab" data-step="3">
+            <span class="step-num">3</span>
+            <span class="step-label">KOMPONEN</span>
+          </button>
+          <button type="button" class="step-tab" data-step="4">
+            <span class="step-num">4</span>
+            <span class="step-label">ASESMEN</span>
+          </button>
+          <button type="button" class="step-tab" data-step="5">
+            <span class="step-num">5</span>
+            <span class="step-label">DOKUMEN</span>
+          </button>
+        </div>
+
+        <hr class="wizard-divider" />
+
+        <!-- STEP 1: MATERI & CAPAIAN TP -->
+        <div class="step-panel active" id="step-panel-1">
+          <div class="step-heading">
+            <h2>Materi &amp; Capaian TP</h2>
+            <p>Pilih jenjang kelas, mata pelajaran, materi pokok, dan sinkronisasi Tujuan Pembelajaran.</p>
+          </div>
+
+          <div class="inner-box">
+            <div class="box-title">1. IDENTITAS PEMBELAJARAN</div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="kelas">JENJANG KELAS</label>
+                <select id="kelas">
+                  <option value="VII">Kelas VII (7 SMP)</option>
+                  <option value="VIII" selected>Kelas VIII (8 SMP)</option>
+                  <option value="IX">Kelas IX (9 SMP)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="semester">SEMESTER</label>
+                <select id="semester">
+                  <option value="Ganjil" selected>Semester Ganjil</option>
+                  <option value="Genap">Semester Genap</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="mapel">MATA PELAJARAN</label>
+                <select id="mapel"></select>
+              </div>
+              <div class="form-group">
+                <label for="alokasi">ALOKASI WAKTU</label>
+                <select id="alokasi">
+                  <option value="1 Pertemuan (2 x 40 Menit)">1 Pertemuan (2 x 40 Menit)</option>
+                  <option value="1 Pertemuan (3 x 40 Menit)">1 Pertemuan (3 x 40 Menit)</option>
+                  <option value="2 Pertemuan (4 x 40 Menit)" selected>2 Pertemuan (4 x 40 Menit)</option>
+                  <option value="2 Pertemuan (5 x 40 Menit)">2 Pertemuan (5 x 40 Menit)</option>
+                  <option value="3 Pertemuan (6 x 40 Menit)">3 Pertemuan (6 x 40 Menit)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" id="custom-mapel-wrap" style="display:none;">
+              <label for="custom-mapel">NAMA MATA PELAJARAN (KETIK SENDIRI)</label>
+              <input type="text" id="custom-mapel" placeholder="Contoh: Bahasa Daerah / Muatan Lokal" />
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="elemen">ELEMEN / BAB UTAMA</label>
+                <select id="elemen"></select>
+              </div>
+              <div class="form-group">
+                <label for="topik">TOPIK / MATERI POKOK</label>
+                <select id="topik"></select>
+              </div>
+            </div>
+
+            <div class="form-group" id="custom-topik-wrap" style="display:none;">
+              <label for="custom-topik">TOPIK / MATERI POKOK (KETIK SENDIRI)</label>
+              <input type="text" id="custom-topik" placeholder="Masukkan topik materi spesifik..." />
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="nama-sekolah">SATUAN PENDIDIKAN (OPSIONAL)</label>
+                <input type="text" id="nama-sekolah" placeholder="Contoh: SMP Negeri 1 Nusantara" />
+              </div>
+              <div class="form-group">
+                <label for="nama-guru">NAMA PENYUSUN / GURU (OPSIONAL)</label>
+                <input type="text" id="nama-guru" placeholder="Contoh: Prabowi, S.Pd." />
+              </div>
+            </div>
+          </div>
+
+          <div class="inner-box" style="margin-top: 18px;">
+            <div class="box-title">2. SINKRONISASI CAPAIAN &amp; TUJUAN PEMBELAJARAN</div>
+            <div class="form-group">
+              <label for="cp-text">CAPAIAN PEMBELAJARAN (CP) FASE D</label>
+              <textarea id="cp-text" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="tp-text">TUJUAN PEMBELAJARAN (TP) SPESIFIK</label>
+              <textarea id="tp-text" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: DESAIN PEDAGOGI PEMBELAJARAN MENDALAM -->
+        <div class="step-panel" id="step-panel-2">
+          <div class="step-heading">
+            <h2>Desain Pedagogi &amp; Profil Lulusan</h2>
+            <p>Tentukan dimensi profil lulusan, strategi pedagogis, kemitraan, dan pemanfaatan digital.</p>
+          </div>
+
+          <div class="inner-box">
+            <div class="box-title">1. DELAPAN DIMENSI PROFIL LULUSAN</div>
+            <div class="chip-grid" id="dimensi-grid">
+              <label class="chip"><input type="checkbox" value="Keimanan dan Ketakwaan terhadap Tuhan YME" /><span>Keimanan &amp; Ketakwaan</span></label>
+              <label class="chip"><input type="checkbox" value="Kewargaan" /><span>Kewargaan</span></label>
+              <label class="chip"><input type="checkbox" value="Penalaran Kritis" checked /><span>Penalaran Kritis</span></label>
+              <label class="chip"><input type="checkbox" value="Kreativitas" checked /><span>Kreativitas</span></label>
+              <label class="chip"><input type="checkbox" value="Kolaborasi" checked /><span>Kolaborasi</span></label>
+              <label class="chip"><input type="checkbox" value="Kemandirian" /><span>Kemandirian</span></label>
+              <label class="chip"><input type="checkbox" value="Kesehatan" /><span>Kesehatan</span></label>
+              <label class="chip"><input type="checkbox" value="Komunikasi" checked /><span>Komunikasi</span></label>
+            </div>
+          </div>
+
+          <div class="inner-box" style="margin-top: 18px;">
+            <div class="box-title">2. KERANGKA PRAKTIK PEMBELAJARAN</div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="pedagogi">MODEL / PRAKTIK PEDAGOGIS</label>
+                <select id="pedagogi">
+                  <option value="Pembelajaran Berbasis Masalah (Problem-Based Learning / PBL)">Problem-Based Learning (PBL)</option>
+                  <option value="Pembelajaran Berbasis Proyek (Project-Based Learning / PjBL)">Project-Based Learning (PjBL)</option>
+                  <option value="Pembelajaran Berbasis Inkuiri (Inquiry-Based Learning)">Inquiry-Based Learning (Inkuiri)</option>
+                  <option value="Pembelajaran Kooperatif & Kolaboratif (Collaborative Learning)">Collaborative Learning</option>
+                  <option value="Pembelajaran Berdiferensiasi (Differentiated Instruction)">Pembelajaran Berdiferensiasi</option>
+                  <option value="Pendekatan STEM / STEAM Terintegrasi">Pendekatan STEM / STEAM</option>
+                  <option value="Discovery Learning (Penemuan Terbimbing)">Discovery Learning</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="lingkungan">LINGKUNGAN &amp; BUDAYA BELAJAR</label>
+                <select id="lingkungan">
+                  <option value="Ruang kelas kolaboratif fleksibel dengan iklim psikologis aman, saling memuliakan, dan ruang diskusi terbuka">Kelas Kolaboratif &amp; Budaya Memuliakan</option>
+                  <option value="Laboratorium / Ruang praktik keterampilan dengan eksplorasi eksperimen langsung">Laboratorium / Ruang Praktik Eksperimen</option>
+                  <option value="Eksplorasi lingkungan luar kelas / alam sekitar sekolah (Outdoor Learning)">Eksplorasi Lingkungan Alam Sekitar</option>
+                  <option value="Blended Learning (Integrasi tatap muka fisik dan ruang belajar virtual)">Blended Learning (Fisik &amp; Virtual)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="kemitraan">KEMITRAAN PEMBELAJARAN</label>
+                <select id="kemitraan">
+                  <option value="Kolaborasi antar peserta didik (tutor sebaya) dan guru sebagai aktivator belajar">Tutor Sebaya &amp; Guru sebagai Aktivator</option>
+                  <option value="Kolaborasi lintas mata pelajaran (Interdisipliner) bersama rekan sejawat guru">Kolaborasi Lintas Mapel (Interdisipliner)</option>
+                  <option value="Pelibatan orang tua/keluarga dalam observasi atau proyek kontekstual di rumah">Pelibatan Orang Tua / Keluarga</option>
+                  <option value="Kemitraan dengan komunitas lokal, perpustakaan, atau narasumber ahli">Komunitas Lokal / Narasumber Ahli</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="digital">PEMANFAATAN TEKNOLOGI DIGITAL</label>
+                <select id="digital">
+                  <option value="Kuis interaktif (Quizizz/Kahoot), eksplorasi video/simulasi, dan presentasi digital">Kuis Interaktif, Video/Simulasi &amp; Presentasi</option>
+                  <option value="Kolaborasi papan tulis digital (Padlet/Canva) dan riset sumber belajar daring">Kolaborasi Canva/Padlet &amp; Riset Daring</option>
+                  <option value="Simulasi virtual (PhET/GeoGebra/Lab Virtual) dan analisis data digital">Simulasi Virtual &amp; Analisis Data</option>
+                  <option value="Low-Tech / Non-Digital (Fokus interaksi fisik, alat peraga nyata, dan LKPD cetak)">Low-Tech / Alat Peraga Nyata (Non-Digital)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="konteks-lokal-select">KONTEKS NYATA / CATATAN KARAKTERISTIK KELAS (OPSIONAL)</label>
+              <select id="konteks-lokal-select">
+                <option value="Serahkan ke AI">Serahkan ke AI (Rancang konteks nyata/kearifan lokal yang paling relevan)</option>
+                <option value="__CUSTOM_KONTEKS__">Tulis Konteks Nyata / Catatan Kelas Sendiri</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="custom-konteks-wrap" style="display:none;">
+              <label for="konteks-lokal">CATATAN KONTEKS NYATA / KARAKTERISTIK KELAS</label>
+              <input type="text" id="konteks-lokal" placeholder="Contoh: Kaitkan dengan isu pengelolaan sampah sekolah atau kearifan lokal daerah..." />
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: KOMPONEN KEGIATAN & PENGALAMAN BELAJAR -->
+        <div class="step-panel" id="step-panel-3">
+          <div class="step-heading">
+            <h2>Komponen Skenario &amp; Pengalaman Belajar</h2>
+            <p>Pilih komponen inti yang wajib dimuat secara operasional di dalam dokumen RPP.</p>
+          </div>
+
+          <div class="inner-box">
+            <div class="box-title">1. INTEGRASI PRINSIP &amp; PENGALAMAN BELAJAR</div>
+            <div class="chip-grid" id="komponen-grid">
+              <label class="chip"><input type="checkbox" value="Label eksplisit prinsip Berkesadaran, Bermakna, dan Menggembirakan di setiap fase kegiatan" checked /><span>Label Prinsip 3M Eksplisit</span></label>
+              <label class="chip"><input type="checkbox" value="Integrasi holistik Olah Pikir, Olah Hati, Olah Rasa, dan Olah Raga" checked /><span>Integrasi 4 Olah Holistik</span></label>
+              <label class="chip"><input type="checkbox" value="Alur Kegiatan Inti bertahap: Memahami (Pengetahuan Esensial-Aplikatif-Nilai), Mengaplikasi, dan Merefleksi" checked /><span>Alur Memahami–Mengaplikasi–Merefleksi</span></label>
+              <label class="chip"><input type="checkbox" value="Strategi Pembelajaran Berdiferensiasi (Konten, Proses, dan Produk)" checked /><span>Diferensiasi Konten/Proses/Produk</span></label>
+              <label class="chip"><input type="checkbox" value="Pertanyaan Pemantik HOTS & Pemahaman Bermakna (Enduring Understanding)" checked /><span>Pertanyaan Pemantik HOTS</span></label>
+              <label class="chip"><input type="checkbox" value="Tabel Skenario Kegiatan Lengkap dengan Estimasi Menit & Peran Guru sebagai Aktivator" checked /><span>Tabel Skenario &amp; Alokasi Menit</span></label>
+            </div>
+          </div>
+
+          <div class="inner-box" style="margin-top: 18px;">
+            <div class="box-title">2. LAMPIRAN PENDUKUNG DALAM DOKUMEN</div>
+            <div class="chip-grid" id="lampiran-grid">
+              <label class="chip"><input type="checkbox" value="LKPD Berbasis Aktivitas (Mengikuti alur Memahami, Mengaplikasi, Merefleksi)" checked /><span>LKPD Berbasis Aktivitas</span></label>
+              <label class="chip"><input type="checkbox" value="Ringkasan Bahan Bacaan Esensial & Kontekstual untuk Guru dan Siswa" checked /><span>Bahan Bacaan Guru &amp; Siswa</span></label>
+              <label class="chip"><input type="checkbox" value="Program Pengayaan (Level Extended Abstract) dan Remedial Bertahap" checked /><span>Program Pengayaan &amp; Remedial</span></label>
+              <label class="chip"><input type="checkbox" value="Panduan Refleksi Guru & Refleksi Metakognisi Peserta Didik" checked /><span>Lembar Refleksi Guru &amp; Siswa</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: ASESMEN & KEDALAMAN KOGNITIF -->
+        <div class="step-panel" id="step-panel-4">
+          <div class="step-heading">
+            <h2>Asesmen &amp; Taksonomi Pembelajaran</h2>
+            <p>Konfigurasikan target kedalaman berpikir dan instrumen evaluasi hasil belajar.</p>
+          </div>
+
+          <div class="inner-box">
+            <div class="box-title">1. TARGET KEDALAMAN KOGNITIF &amp; RUBRIK</div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="taksonomi">LEVEL TAKSONOMI (SOLO &amp; BLOOM)</label>
+                <select id="taksonomi">
+                  <option value="Relasional (Menganalisis & Menghubungkan Ide) hingga Berpikir Abstrak Mendalam / Extended Abstract (Mengevaluasi & Mencipta)">Relasional → Extended Abstract (HOTS)</option>
+                  <option value="Multistruktural ke Relasional (Mengintegrasikan Beberapa Konsep ke Struktur Utuh)">Multistruktural → Relasional</option>
+                  <option value="Extended Abstract (Generalisasi ke Konteks Baru & Pemecahan Masalah Nyata)">Extended Abstract (Transfer Konteks Baru)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="jenis-rubrik">STANDAR RUBRIK PENILAIAN</label>
+                <select id="jenis-rubrik">
+                  <option value="Rubrik Holistik 5 Level Taksonomi SOLO (Prastruktural, Unistruktural, Multistruktural, Relasional, Extended Abstract)">Rubrik 5 Level Taksonomi SOLO</option>
+                  <option value="Rubrik Analitik 4 Kriteria (Sangat Berkembang, Berkembang Sesuai Harapan, Sedang Berkembang, Mulai Berkembang)">Rubrik Analitik 4 Kriteria Kurikulum Merdeka</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="inner-box" style="margin-top: 18px;">
+            <div class="box-title">2. CAKUPAN INSTRUMEN ASESMEN</div>
+            <div class="chip-grid" id="asesmen-grid">
+              <label class="chip"><input type="checkbox" value="Asesmen Awal / Diagnostik (Pemetaan kesiapan belajar, minat, dan pengetahuan prasyarat)" checked /><span>Asesmen Awal (Diagnostik)</span></label>
+              <label class="chip"><input type="checkbox" value="Asesmen Proses / Formatif (Lembar observasi diskusi, kolaborasi, dan umpan balik langsung)" checked /><span>Asesmen Proses (Formatif)</span></label>
+              <label class="chip"><input type="checkbox" value="Asesmen Akhir / Sumatif (Tugas unjuk kerja / studi kasus kontekstual lengkap dengan kunci/pedoman penskoran)" checked /><span>Asesmen Akhir (Unjuk Kerja/HOTS)</span></label>
+              <label class="chip"><input type="checkbox" value="Instrumen Penilaian Diri (Self-Assessment) & Penilaian Antarteman (Peer-Assessment)" checked /><span>Self &amp; Peer Assessment</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: FORMAT DOKUMEN & EKSPOR LANGSUNG -->
+        <div class="step-panel" id="step-panel-5">
+          <div class="step-heading">
+            <h2>Format Dokumen &amp; Eksekusi AI</h2>
+            <p>Atur agar AI langsung membuatkan file dokumen siap pakai, bukan sekadar balasan teks biasa.</p>
+          </div>
+
+          <div class="inner-box">
+            <div class="box-title">1. OUTPUT DOKUMEN LANGSUNG (DIRECT FILE GENERATION)</div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="format-file">TARGET FILE YANG DIGENERATE AI</label>
+                <select id="format-file">
+                  <option value="DOCX">File Microsoft Word (.docx) Siap Unduh &amp; Edit</option>
+                  <option value="PDF">File PDF (.pdf) Rapi Siap Cetak A4</option>
+                  <option value="CANVAS">Dokumen Interaktif di Canvas / Canva Docs (Siap Ekspor)</option>
+                  <option value="GDOCS">Format Siap Ekspor ke Google Docs</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="gaya-layout">GAYA TATA LETAK DOKUMEN</label>
+                <select id="gaya-layout">
+                  <option value="Formal Administrasi Sekolah (Kop Identitas, Tabel Rapi, Margin Standar A4, Blok Tanda Tangan Kepala Sekolah & Guru)">Administrasi Sekolah Resmi (A4 Formal)</option>
+                  <option value="Modern Visual Modul Ajar (Kartu Ringkasan, Callout Prinsip 3M, Tabel Berwarna Lembut)">Modern Visual Modul Ajar</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label for="mode-output">ALUR PENYUSUNAN AI</label>
+                <select id="mode-output">
+                  <option value="langsung">Langsung Generate Dokumen Utuh (1 Kali Eksekusi)</option>
+                  <option value="bertahap">Dua Tahap (Tahap 1: Review Draf Inti → Ketik 'LANJUT' → Tahap 2: Generate File Lengkap)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="bahasa-dokumen">BAHASA DOKUMEN</label>
+                <select id="bahasa-dokumen">
+                  <option value="Bahasa Indonesia Baku (Sesuai EYD V)">Bahasa Indonesia Baku</option>
+                  <option value="Bilingual (Bahasa Indonesia & Istilah Pedagogis Bahasa Inggris)">Bilingual (Indonesia – Inggris)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="finish-banner">
+            <div class="finish-icon">✓</div>
+            <div>
+              <strong>Konfigurasi 5 Tahap Lengkap!</strong>
+              <p>Klik <strong>Salin Prompt RPP</strong> di panel kanan, lalu tempel ke AI (Gemini / ChatGPT) agar dokumen langsung dibuatkan secara otomatis.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WIZARD FOOTER NAVIGATION -->
+        <div class="wizard-nav">
+          <button type="button" id="btn-prev" class="btn-nav-prev" disabled>← Sebelumnya</button>
+          <span class="step-indicator-text" id="step-indicator-text">Langkah 1 dari 5</span>
+          <button type="button" id="btn-next" class="btn-nav-next">Selanjutnya →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KOLOM KANAN: TERMINAL PROMPT AI -->
+    <aside class="terminal-column">
+      <div class="terminal-card">
+        <div class="terminal-top">
+          <div class="terminal-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="terminal-label">TERMINAL PROMPT RPP</span>
+          <span class="word-count" id="word-count">0 kata</span>
+        </div>
+
+        <div class="terminal-body">
+          <pre id="prompt-output"></pre>
+        </div>
+
+        <div class="terminal-actions">
+          <button type="button" id="btn-copy" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="copy-text">Salin Prompt RPP</span>
+          </button>
+          <button type="button" id="btn-download" class="btn-secondary" title="Unduh Prompt sebagai file .txt">
+            Unduh .TXT
+          </button>
+        </div>
+
+        <div class="terminal-guide">
+          <h4>✦ Cara Menggunakan:</h4>
+          <ol>
+            <li>Lengkapi tahapan <strong>1 sampai 5</strong> di sebelah kiri.</li>
+            <li>Klik <strong>Salin Prompt RPP</strong> lalu tempel di <strong>Gemini</strong> atau <strong>ChatGPT</strong>.</li>
+            <li>AI akan langsung membuatkan file dokumen RPP siap unduh dan pakai di kelas.</li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-credit">made with dedication <strong>@fajarth</strong></p>
+    </div>
+  </footer>
+
+  <script src="kurikulum-data.js"></script>
+  <script src="prompt-engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
