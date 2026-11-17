@@ -1,7 +1,7 @@
 /**
  * Prompt Engine — Studio RPP SMP Pembelajaran Mendalam
  * Mengintegrasikan prinsip Pembelajaran Mendalam, CP Fase D,
- * serta Instruksi Universal Lintas AI (Anti-AI Look & Professional Formatting).
+ * serta Instruksi Integrasi Canva Connector & Desain Profesional (Canva Doc / Presentasi).
  */
 
 function buildDeepLearningPrompt(config) {
@@ -55,46 +55,46 @@ function buildDeepLearningPrompt(config) {
     ? asesmenList.map((item) => `  • ${item}`).join("\n")
     : "  • Asesmen Awal, Asesmen Proses, dan Asesmen Akhir.";
 
-  // Instruksi Universal Lintas AI untuk Menjamin Kerapian Maksimal
-  let instruksiUniversalAI = `
+  // Instruksi Spesifik Canva Connector & Desain Profesional
+  let instruksiCanvaDesain = `
 ====================================================================
-ATURAN UTAMA OUTPUT & FORMAT (UNIVERSAL LINTAS PLATFORM AI)
+PANDUAN DESAIN GRAFIS & INTEGRASI CANVA CONNECTOR
 ====================================================================
-1. **ANTI-AI LOOK & GAYA BAHASA HUMANIS:**
-   - JANGAN gunakan pengantar klise robotik (seperti "Dalam era modern ini...", "Penting untuk dicatat...", atau "Modul ajar ini dirancang untuk..."). 
-   - Gunakan bahasa Indonesia baku yang luwes, bernyawa, praktis, dan ditulis dengan sudut pandang **Guru Pakar Penyusun Pembelajaran** yang sangat berpengalaman di kelas nyata.
-2. **STANDAR TATA LETAK & KERAPIAN DOKUMEN:**
-   - Gunakan hierarki heading yang bersih, terstruktur, dan konsisten (Bagian A, B, C, dst.).
-   - Rancang tabel (seperti identitas, matriks kesiapan, dan skenario pembelajaran) dengan format baris/kolom yang jelas, padat isi, dan mudah disalin ke dokumen atau platform desain.
-3. **GARANSI KELENGKAPAN:** 
-   - Apapun platform AI yang digunakan, pastikan dokumen disusun lengkap secara utuh dari Bagian A hingga Lampiran tanpa terpotong atau diringkas secara berlebihan.
+1. **PERAN UTAMA DESAIN:** 
+   - Bertindaklah sebagai Instructional Designer profesional dan expert graphic designer.
+2. **EKSEKUSI CANVA CONNECTOR:**
+   - Tolong gunakan integrasi Canva untuk membuatkan dokumen **Canva Doc** (atau **Presentasi** sesuai pilihan format) untuk RPP ini dengan desain tata letak (layout) yang profesional, rapi, dan estetik.
+   - **WAJIB:** Jika di-generate menggunakan Canva Doc atau Canva Connector, sertakan dan berikan **tautan langsung (clickable link) untuk membuka dokumen tersebut di Canva** di akhir respons Anda.
+3. **PANDUAN TATA LETAK & ESTETIKA VISUAL:**
+   - **Gaya Visual:** Gunakan gaya desain pendidikan modern yang bersih dan ramah (clean & educational) dengan palet warna profesional (misal: biru soft, hijau mint, atau kombinasi warna netral dengan aksen warna cerah yang tidak berlebihan).
+   - **Elemen Pendukung:** Tambahkan arahan elemen visual berupa ikon, ornamen pembatas, atau ilustrasi pendukung yang relevan dengan topik pembelajaran di setiap bagian/halaman agar dokumen tidak membosankan.
+   - **Hierarki Teks:** Buat hierarki teks yang sangat jelas (Judul bab besar, sub-judul, dan poin-poin isi dengan bullet/numbering yang rapi, serta gunakan format blok kotak/callout untuk poin penting).
+4. **ANTI-AI LOOK & GAYA BAHASA:**
+   - Gunakan bahasa Indonesia baku yang luwes, bernyawa, praktis, dan ditulis dari sudut pandang Guru Pakar Penyusun Pembelajaran (hindari frasa klise robotik AI).
 `;
 
-  let instruksiFormatSpesifik = "";
-  if (formatFile === "CANVAS" || formatFile === "CANVA") {
-    instruksiFormatSpesifik = `[TARGET: CANVA / DOKUMEN INTERAKTIF]
-- Susun teks dalam blok-blok konten terstruktur (Cards / Callout format) agar sangat mudah disalin ke elemen desain Canva Docs atau Presentasi Canva.`;
-  } else if (formatFile === "DOCX") {
-    instruksiFormatSpesifik = `[TARGET: MICROSOFT WORD / .DOCX]
-- Susun format teks dengan struktur tabel profesional dan hierarki rapi yang siap diekspor menjadi file dokumen siap unduh.`;
+  let instruksiFormatUmum = "";
+  if (formatFile === "DOCX") {
+    instruksiFormatUmum = `[TARGET OUTPUT: MICROSOFT WORD / .DOCX] - Buat file Word profesional dengan tabel ber-header rapi.`;
+  } else if (formatFile === "PDF") {
+    instruksiFormatUmum = `[TARGET OUTPUT: PDF] - Buat dokumen ukuran A4 yang bersih dan siap cetak.`;
   } else {
-    instruksiFormatSpesifik = `[TARGET: DOKUMEN STANDAR PROFESIONAL]
-- Sajikan dokumen secara bersih dengan pemformatan heading dan tabel rapi siap pakai.`;
+    instruksiFormatUmum = `[TARGET OUTPUT: DOKUMEN INTERAKTIF / CANVA]`;
   }
 
   const alurEksekusi = modeOutput === "bertahap"
     ? `ALUR EKSEKUSI DUA TAHAP:
-- TAHAP 1: Tampilkan kerangka inti RPP (Bagian A sampai D) terlebih dahulu dengan gaya bahasa natural. Di akhir, tanyakan: "Apakah kerangka ini sudah sesuai dan rapi? Ketik 'LANJUT' untuk meng-generate dokumen lengkap."
-- TAHAP 2 (SETELAH KETIK 'LANJUT'): Lanjutkan generate seluruh bagian dokumen hingga lampiran secara utuh tanpa terpotong.`
+- TAHAP 1: Tampilkan kerangka inti RPP terlebih dahulu dengan gaya bahasa natural. Di akhir, tanyakan: "Apakah kerangka ini sudah sesuai? Ketik 'LANJUT' untuk langsung mengeksekusi pembuatan dokumen melalui Canva Connector beserta tautannya."
+- TAHAP 2 (SETELAH KETIK 'LANJUT'): Lanjutkan generate seluruh dokumen secara utuh tanpa terpotong.`
     : `ALUR EKSEKUSI LANGSUNG (1 KALI PROSES):
-Susun seluruh bagian RPP dari Bagian A hingga Lampiran secara utuh, mendalam, operasional, berestetika tinggi, dan **bebas dari gaya bahasa robotik AI** dalam satu kali eksekusi.`;
+Susun seluruh bagian RPP dari Bagian A hingga Lampiran secara utuh, operasional, estetik, dan **langsung panggil integrasi Canva Connector untuk menghasilkan Canva Doc lengkap dengan tautan unduhan/bukanya** dalam satu eksekusi.`;
 
-  return `Bertindaklah sebagai Guru Pakar Penyusun Pembelajaran, Pakar Desain Instruksional Kurikulum Merdeka, dan Fasilitator Nasional Pembelajaran Mendalam jenjang SMP (Fase D).
+  return `Bertindaklah sebagai Guru Pakar Penyusun Pembelajaran, Instructional Designer profesional, dan Expert Graphic Designer jenjang SMP (Fase D).
 
-Tugas Anda adalah menyusun dokumen **Rencana Pelaksanaan Pembelajaran (RPP) / Modul Ajar** yang sangat rapi, profesional, memuliakan peserta didik, menggunakan bahasa guru penggerak yang natural (bebas dari kesan AI kaku), serta langsung siap pakai.
+Tugas Anda adalah menyusun dokumen **Rencana Pelaksanaan Pembelajaran (RPP) / Modul Ajar** yang sangat rapi, profesional, memuliakan peserta didik, memiliki estetika tingkat tinggi, serta terintegrasi langsung dengan ekosistem Canva.
 
-${instruksiUniversalAI}
-${instruksiFormatSpesifik}
+${instruksiCanvaDesain}
+${instruksiFormatUmum}
 
 ====================================================================
 1. IDENTITAS & ACUAN KURIKULUM (FASE D — SMP)
