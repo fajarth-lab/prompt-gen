@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elTopik.value = "1";
     syncCpAndTp();
     elAlokasi.value = "2 Pertemuan (5 x 40 Menit)";
-    elNamaSekolah.value = "SMP Negeri 1 Wanareja";
+    elNamaSekolah.value = "SMP Negeri 2 Wanareja";
     elNamaGuru.value = "Nama Guru, S.Pd.";
     elKonteksLokalSelect.value = "__CUSTOM_KONTEKS__";
     updateKonteksLokalUI();
