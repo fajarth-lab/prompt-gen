@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   let currentStep = 1;
   const totalSteps = 5;
+  let defaultTpValue = "";
 
   // Wizard Elements
   const stepTabs = document.querySelectorAll(".step-tab");
@@ -28,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const elCustomMapel = document.getElementById("custom-mapel");
 
   const elElemen = document.getElementById("elemen");
+  const elCustomElemenWrap = document.getElementById("custom-elemen-wrap");
+  const elCustomElemen = document.getElementById("custom-elemen");
   const elTopik = document.getElementById("topik");
   const elCustomTopikWrap = document.getElementById("custom-topik-wrap");
   const elCustomTopik = document.getElementById("custom-topik");
@@ -37,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const elCpText = document.getElementById("cp-text");
   const elTpText = document.getElementById("tp-text");
+  const elBtnResetTp = document.getElementById("btn-reset-tp");
 
   const elDimensiBoxes = document.querySelectorAll("#dimensi-grid input[type='checkbox']");
   const elPedagogi = document.getElementById("pedagogi");
@@ -65,6 +69,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const elBtnCopy = document.getElementById("btn-copy");
   const elCopyText = document.getElementById("copy-text");
   const elBtnDownload = document.getElementById("btn-download");
+
+  // --- HELPER TP DEFAULT & RESET ---
+  function updateTpResetVisibility() {
+    if (!elBtnResetTp || !elTpText) return;
+    const isModified = elTpText.value.trim() !== defaultTpValue.trim();
+    elBtnResetTp.style.display = isModified ? "inline-flex" : "none";
+  }
+
+  function setDefaultTp(newTpValue) {
+    defaultTpValue = newTpValue || "";
+    if (elTpText) {
+      elTpText.value = defaultTpValue;
+    }
+    updateTpResetVisibility();
+  }
 
   // --- WIZARD NAVIGATION ---
   function goToStep(stepNumber) {
@@ -130,9 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (selectedMapel === "__CUSTOM__") {
       elCustomMapelWrap.style.display = "block";
+      elCustomElemenWrap.style.display = "block";
       const opt = document.createElement("option");
-      opt.value = "Elemen & Capaian Pembelajaran Fase D";
-      opt.textContent = "Elemen & Capaian Pembelajaran Fase D";
+      opt.value = "__CUSTOM_ELEMEN__";
+      opt.textContent = "Lainnya (Ketik Elemen / Bab Utama Sendiri)";
       elElemen.appendChild(opt);
       updateTopikOptions();
       return;
@@ -149,6 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
       elElemen.appendChild(opt);
     });
 
+    const customElemenOpt = document.createElement("option");
+    customElemenOpt.value = "__CUSTOM_ELEMEN__";
+    customElemenOpt.textContent = "Lainnya (Ketik Elemen / Bab Utama Sendiri)";
+    elElemen.appendChild(customElemenOpt);
+
+    elCustomElemenWrap.style.display = elElemen.value === "__CUSTOM_ELEMEN__" ? "block" : "none";
     updateTopikOptions();
   }
 
@@ -158,9 +184,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedKelas = elKelas.value;
     const selectedSemester = elSemester.value;
 
+    elCustomElemenWrap.style.display = selectedElemen === "__CUSTOM_ELEMEN__" ? "block" : "none";
     elTopik.innerHTML = "";
 
-    if (selectedMapel !== "__CUSTOM__" && KURIKULUM_DATA[selectedMapel]) {
+    if (
+      selectedMapel !== "__CUSTOM__" &&
+      selectedElemen !== "__CUSTOM_ELEMEN__" &&
+      KURIKULUM_DATA[selectedMapel]
+    ) {
       const elemenObj = KURIKULUM_DATA[selectedMapel].elemen[selectedElemen];
       const daftarTopik = elemenObj?.topik?.[selectedKelas]?.[selectedSemester] || [];
 
@@ -177,6 +208,10 @@ document.addEventListener("DOMContentLoaded", () => {
     customTopikOpt.textContent = "Lainnya (Ketik Topik Sendiri)";
     elTopik.appendChild(customTopikOpt);
 
+    if (selectedElemen === "__CUSTOM_ELEMEN__") {
+      elTopik.value = "__CUSTOM_TOPIK__";
+    }
+
     syncCpAndTp();
   }
 
@@ -190,12 +225,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selectedMapel === "__CUSTOM__") {
       elCustomTopikWrap.style.display = "block";
       elCpText.value = "Peserta didik mampu memahami konsep esensial, menerapkan keterampilan proses, dan merefleksikan nilai-nilai pembelajaran sesuai Capaian Pembelajaran Fase D.";
-      elTpText.value = "Peserta didik mampu menganalisis konsep pokok materi, mengaplikasikannya dalam pemecahan masalah nyata, serta merefleksikan pengalaman belajarnya secara bermakna.";
+      setDefaultTp("Peserta didik mampu menganalisis konsep pokok materi, mengaplikasikannya dalam pemecahan masalah nyata, serta merefleksikan pengalaman belajarnya secara bermakna.");
       renderPrompt();
       return;
     }
 
     const mapelObj = KURIKULUM_DATA[selectedMapel];
+
+    if (selectedElemen === "__CUSTOM_ELEMEN__") {
+      elCustomTopikWrap.style.display = "block";
+      elCpText.value = mapelObj?.cpUmum || "Peserta didik mampu memahami konsep esensial, menerapkan keterampilan proses, dan merefleksikan nilai-nilai pembelajaran sesuai Capaian Pembelajaran Fase D.";
+      setDefaultTp("Peserta didik mampu menganalisis konsep pokok pada elemen/bab utama, mengaplikasikannya dalam pemecahan masalah nyata, serta merefleksikan pengalaman belajarnya secara bermakna.");
+      renderPrompt();
+      return;
+    }
+
     const elemenObj = mapelObj.elemen[selectedElemen];
     const daftarTopik = elemenObj?.topik?.[selectedKelas]?.[selectedSemester] || [];
 
@@ -203,12 +247,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (selectedTopikIdx === "__CUSTOM_TOPIK__") {
       elCustomTopikWrap.style.display = "block";
-      elTpText.value = "Peserta didik mampu memahami konsep esensial, mengaplikasikan dalam konteks kehidupan nyata, dan merefleksikan proses belajarnya secara kritis dan kolaboratif.";
+      setDefaultTp("Peserta didik mampu memahami konsep esensial, mengaplikasikan dalam konteks kehidupan nyata, dan merefleksikan proses belajarnya secara kritis dan kolaboratif.");
     } else {
       elCustomTopikWrap.style.display = "none";
       const topikObj = daftarTopik[Number(selectedTopikIdx)];
       if (topikObj) {
-        elTpText.value = topikObj.tp;
+        setDefaultTp(topikObj.tp);
       }
     }
 
@@ -236,8 +280,16 @@ document.addEventListener("DOMContentLoaded", () => {
       ? (elCustomMapel.value.trim() || "Mata Pelajaran Umum SMP")
       : elMapel.value;
 
+    const elemenFinal = elElemen.value === "__CUSTOM_ELEMEN__"
+      ? (elCustomElemen.value.trim() || "Elemen / Bab Utama Mandiri")
+      : elElemen.value;
+
     let topikFinal = "";
-    if (elMapel.value === "__CUSTOM__" || elTopik.value === "__CUSTOM_TOPIK__") {
+    if (
+      elMapel.value === "__CUSTOM__" ||
+      elElemen.value === "__CUSTOM_ELEMEN__" ||
+      elTopik.value === "__CUSTOM_TOPIK__"
+    ) {
       topikFinal = elCustomTopik.value.trim() || "Topik Pembelajaran Kontekstual";
     } else {
       const selectedOption = elTopik.options[elTopik.selectedIndex];
@@ -253,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
       semester: elSemester.value,
       mapel: mapelFinal,
       alokasi: elAlokasi.value,
-      elemen: elElemen.value,
+      elemen: elemenFinal,
       topik: topikFinal,
       namaSekolah: elNamaSekolah.value.trim(),
       namaGuru: elNamaGuru.value.trim(),
@@ -307,6 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elNamaSekolah.value = "";
     elNamaGuru.value = "";
     elCustomMapel.value = "";
+    elCustomElemen.value = "";
     elCustomTopik.value = "";
     elKonteksLokalSelect.value = "Serahkan ke AI";
     updateKonteksLokalUI();
@@ -314,6 +367,14 @@ document.addEventListener("DOMContentLoaded", () => {
     updateElemenOptions();
     goToStep(1);
   });
+
+  if (elBtnResetTp) {
+    elBtnResetTp.addEventListener("click", () => {
+      elTpText.value = defaultTpValue;
+      updateTpResetVisibility();
+      renderPrompt();
+    });
+  }
 
   // --- COPY & DOWNLOAD ---
   async function copyPromptToClipboard() {
@@ -366,9 +427,11 @@ document.addEventListener("DOMContentLoaded", () => {
   elElemen.addEventListener("change", updateTopikOptions);
   elTopik.addEventListener("change", syncCpAndTp);
   elKonteksLokalSelect.addEventListener("change", updateKonteksLokalUI);
+  elTpText.addEventListener("input", updateTpResetVisibility);
+  elTpText.addEventListener("change", updateTpResetVisibility);
 
   const liveControls = [
-    elAlokasi, elCustomMapel, elCustomTopik, elNamaSekolah, elNamaGuru,
+    elAlokasi, elCustomMapel, elCustomElemen, elCustomTopik, elNamaSekolah, elNamaGuru,
     elCpText, elTpText, elPedagogi, elLingkungan, elKemitraan,
     elDigital, elKonteksLokal, elTaksonomi, elJenisRubrik,
     elFormatFile, elGayaLayout, elModeOutput, elBahasaDokumen
