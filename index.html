@@ -133,6 +133,11 @@
               </div>
             </div>
 
+            <div class="form-group" id="custom-elemen-wrap" style="display:none;">
+              <label for="custom-elemen">ELEMEN / BAB UTAMA (KETIK SENDIRI)</label>
+              <input type="text" id="custom-elemen" placeholder="Contoh: Muatan Lokal / Bab Khusus / Elemen Baru..." />
+            </div>
+
             <div class="form-group" id="custom-topik-wrap" style="display:none;">
               <label for="custom-topik">TOPIK / MATERI POKOK (KETIK SENDIRI)</label>
               <input type="text" id="custom-topik" placeholder="Masukkan topik materi spesifik..." />
@@ -157,7 +162,10 @@
               <textarea id="cp-text" rows="3"></textarea>
             </div>
             <div class="form-group">
-              <label for="tp-text">TUJUAN PEMBELAJARAN (TP) SPESIFIK</label>
+              <div class="label-with-action">
+                <label for="tp-text">TUJUAN PEMBELAJARAN (TP) SPESIFIK</label>
+                <button type="button" id="btn-reset-tp" class="btn-reset-tp" style="display:none;">↺ Reset TP</button>
+              </div>
               <textarea id="tp-text" rows="3"></textarea>
             </div>
           </div>
