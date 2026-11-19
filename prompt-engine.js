@@ -35,6 +35,7 @@ function buildDeepLearningPrompt(config) {
 
   const identitasSekolah = namaSekolah || "[Nama Satuan Pendidikan]";
   const identitasGuru = namaGuru || "[Nama Guru Penyusun]";
+  const identitasElemen = elemen && elemen.trim() ? elemen.trim() : "Elemen / Bab Utama";
   const dimensiText = dimensiList.length > 0
     ? dimensiList.join(", ")
     : "Penalaran Kritis, Kreativitas, Kolaborasi, Komunikasi";
@@ -131,7 +132,7 @@ ${instruksiUniversalAntiAI}
 - Kelas / Semester   : Kelas ${kelas} / Semester ${semester}
 - Mata Pelajaran     : ${mapel}
 - Alokasi Waktu      : ${alokasi}
-- Elemen / Bab       : ${elemen}
+- Elemen / Bab       : ${identitasElemen}
 - Topik / Materi     : ${topik}
 - Konteks Kelas      : ${konteksText}
 - Bahasa Dokumen     : ${bahasaDokumen}
@@ -142,7 +143,7 @@ ${instruksiUniversalAntiAI}
 - Tujuan Pembelajaran (TP):
   "${tp}"
 
-*Catatan Fokus Kurikuler:* Pastikan seluruh skenario pembelajaran, LKPD, ilustrasi, dan instrumen asesmen terkunci secara presisi pada elemen **${elemen}** dan topik **${topik}**.
+*Catatan Fokus Kurikuler:* Pastikan seluruh skenario pembelajaran, LKPD, ilustrasi, dan instrumen asesmen terkunci secara presisi pada elemen **${identitasElemen}** dan topik **${topik}**. Apabila elemen **${identitasElemen}** ditulis mandiri di luar daftar elemen standar, sesuaikan alur materi dan penilaian agar tetap selaras dengan Capaian Pembelajaran Fase D serta prinsip Pembelajaran Mendalam.
 
 ====================================================================
 2. KERANGKA PEDAGOGIS PEMBELAJARAN MENDALAM
