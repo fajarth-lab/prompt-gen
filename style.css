@@ -353,6 +353,39 @@ body {
   margin-bottom: 0;
 }
 
+.label-with-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.label-with-action label {
+  margin-bottom: 0;
+}
+
+.btn-reset-tp {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  color: #0369a1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
+  padding: 3px 9px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-reset-tp:hover {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+}
+
 label {
   display: block;
   font-family: 'JetBrains Mono', monospace;
